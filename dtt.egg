@@ -47,14 +47,14 @@ We make use of the internal lexer of Egel but discard all whitespace
 and token information.
 
 ```
-    def lexer = [URI T ->
-        System::tokenize URI T 
-                |> filter [(_,"whitespace",_) -> false | _ -> true]
-                |> map [((_,R,C),_,T) -> ((R,C),T)]]
+    def lexer = 
+        do System::tokenize ""
+        |> filter [(_,"whitespace",_) -> false | _ -> true]
+        |> map [((_,R,C),_,T) -> ((R,C),T)]
 ```
 
 ## Tests
 ```
-    def main = OS::read_line OS::stdin |> lexer ""
+    def main = OS::read_line OS::stdin |> lexer
 ```
 
