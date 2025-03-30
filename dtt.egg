@@ -16,9 +16,11 @@ We are going to implement:
 
 ## Syntax
 
+Starting off, a number of data constructors for the abstract
+syntax tree.
+
 ```
     data t_var, t_univ, t_pi, t_lambda, t_app
 ```
-
 
 
