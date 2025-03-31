@@ -15,10 +15,13 @@ by Andrej Bauer
 
 We are going to implement:
 
-- a hierarchy of universes `Type_0`, `Type_1`, ..., 
-- dependent products `Π x:A . B`,
-- functions `λ x: A . e`, and
-- application `e_0 e_1`.
+- a hierarchy of universes written `Type 0`, `Type 1`, `Type 2`, ...
+- the dependent product `forall x : A . B`,
+- a function `fun x : A => B`,
+- application is juxtaposition `e0 e1`.
+
+If `x` does not appear freely in `B`, then we write `A -> B` instead 
+of `forall x : A . B`.
 
 ## Egel preamble
 
@@ -35,16 +38,6 @@ tree.
 ```
     data t_var, t_univ, t_pi, t_lambda, t_app
 ```
-
-For the concrete syntax we choose:
-
-- universes are written `Type 0`, `Type 1`, `Type 2`, ...
-- the dependent product is written `forall x : A . B`,
-- a function is written `fun x : A => B`,
-- application is juxtaposition `e0 e1`.
-
-If `x` does not appear freely in `B`, then we write `A -> B` instead 
-of `forall x : A . B`.
 
 ## Lexer
 
