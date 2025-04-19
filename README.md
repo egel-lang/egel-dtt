@@ -30,15 +30,6 @@ of `forall x : A . B`.
     using System, List
 ```
 
-## Syntax
-
-Starting off, a number of data constructors for the abstract syntax 
-tree.
-
-```
-    data t_univ, t_pi, t_lambda, t_app
-```
-
 ## Lexer
 
 We make use of the internal lexer of Egel but discard all whitespace 
@@ -52,6 +43,15 @@ and token information.
 ```
 
 ## Parser
+
+Starting off, a number of data constructors for the abstract syntax 
+tree.
+
+```
+    data t_univ, t_pi, t_lambda, t_app
+```
+
+Parsing is depth-first search over a list of tokens.
 
 ```
     import "search.eg"
@@ -93,7 +93,6 @@ and token information.
 
     def parse =
         search parse_term [X _ -> X] [X _ -> throw X] [X _ -> throw X]
-        
 ```
 
 ## Tests
