@@ -57,6 +57,7 @@ and token information.
     import "search.eg"
     using Search
 
+    def end = [{} -> success none {} | _ -> fail {}]
     def look = [{} -> fail {} | {X|XX} -> success X XX]
     def token = [S -> look <*> \T -> let T = snd T in if T == S then success T else fail]
     def match = [S -> look <*> \T -> let T = snd T in if Regex::match (Regex::compile S) T 
@@ -84,7 +85,8 @@ and token information.
         <+> (token "(" <*> \_ -> parse_primary <*> \E -> token ")" <*> \_ -> success E)
 
     def parse_primary_opt =
-        [E0 -> parse_primary </> \E1 -> parse_primary_opt (t_app E0 E1)]
+        [E0 -> (parse_primary </> \E1 -> parse_primary_opt (t_app E0 E1))
+                <+> success E0]
 
     def parse_term =
         parse_primary </> \E0 -> parse_primary_opt E0
