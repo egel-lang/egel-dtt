@@ -62,7 +62,7 @@ and token information.
     def match = [S -> look <*> \T -> let T = snd T in if Regex::match (Regex::compile S) T 
                     then success T else fail]
 
-    def parse_var = match "[a-zA-Z]+[0-9]*]"
+    def parse_var = match "[a-zA-Z]+[0-9]*"
 
     def parse_universe =
         token "Type" <*> \_ -> match "[0-9+]" <*> \N -> success (t_univ (to_int N))
@@ -96,6 +96,6 @@ and token information.
 
 ## Tests
 ```
-    def main = OS::read_line OS::stdin |> lexer |> [T -> print T; T] |> parse
+    def main = OS::read_line OS::stdin |> lexer |> [T -> print T "\n"; T] |> parse
 ```
 
