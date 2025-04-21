@@ -48,7 +48,7 @@ Starting off, a number of data constructors for the abstract syntax
 tree.
 
 ```
-    data t_univ, t_pi, t_lambda, t_app
+    data t_var, t_univ, t_pi, t_lambda, t_app
 ```
 
 Parsing is depth-first search over a list of tokens.
@@ -63,7 +63,7 @@ Parsing is depth-first search over a list of tokens.
     def match = [S -> look <*> \T -> let T = snd T in if Regex::match (Regex::compile S) T 
                     then success T else fail]
 
-    def parse_var = match "[a-zA-Z]+[0-9]*"
+    def parse_var = match "[a-zA-Z]+" <@> \V -> t_var V
 
     def parse_universe =
         token "Type" <*> \_ -> match "[0-9+]" <*> \N -> success (t_univ (to_int N))
@@ -93,6 +93,17 @@ Parsing is depth-first search over a list of tokens.
 
     def parse =
         search parse_term [X _ -> X] [X _ -> throw X] [X _ -> throw X]
+```
+
+## Substitution
+
+```
+    val fresh_count = ref 0
+
+    def get_fresh = let N = get_ref fresh_count in set_ref fresh_count (N+1); N
+
+    def refresh = [t_var V -> t_var V get_fresh|t_var V _ -> t_var V get_fresh]
+
 ```
 
 ## Tests
